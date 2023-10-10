@@ -2,6 +2,11 @@ package aplicacion;
 
 import algoritmos.*;
 
+import java.util.ArrayList;
+
+import static algoritmos.BFSShortestPath.addEdge;
+import static algoritmos.BFSShortestPath.printShortestDistance;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -165,18 +170,74 @@ public class Main {
 
         //Grafo para multistage
         // Grafo almacenado en forma de una Matriz de Adyacencia
+
+        int INFI = Integer.MAX_VALUE;
+
         int[][] graphMultistage = new int[][] {
-                { INF, 1, 2, 5, INF, INF, INF, INF },
-                { INF, INF, INF, INF, 4, 11, INF, INF },
-                { INF, INF, INF, INF, 9, 5, 16, INF },
-                { INF, INF, INF, INF, INF, INF, 2, INF },
-                { INF, INF, INF, INF, INF, INF, INF, 18 },
-                { INF, INF, INF, INF, INF, INF, INF, 13 },
-                { INF, INF, INF, INF, INF, INF, INF, 2 }
+                { INFI, 1, 2, 5, INFI, INFI, INFI, INFI },
+                { INFI, INFI, INFI, INFI, 4, 11, INFI, INFI },
+                { INFI, INFI, INFI, INFI, 9, 5, 16, INFI },
+                { INFI, INFI, INFI, INFI, INFI, INFI, 2, INFI },
+                { INFI, INFI, INFI, INFI, INFI, INFI, INFI, 18 },
+                { INFI, INFI, INFI, INFI, INFI, INFI, INFI, 13 },
+                { INFI, INFI, INFI, INFI, INFI, INFI, INFI, 2 }
         };
 
         GFGMultistage gfgMultistage = new GFGMultistage();
 
-        System.out.println(gfgMultistage.shortestDist(graphMultistage));// no esta imprimiendo 9 como dice en la pagina REVISAR
+        System.out.println("GFGMultistage result: "+gfgMultistage.shortestDist(graphMultistage));
+
+        // Número de vértices
+        int v = 8;
+
+        // Lista de adyacencia para almacenar qué vértices están conectados
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>(v);
+        for (int i = 0; i < v; i++) {
+            adj.add(new ArrayList<Integer>());
+        }
+
+        // Creación del grafo dado en el diagrama anterior.
+        // La función add_edge toma como argumento una lista de adyacencia, fuente
+        // y vértice de destino y forma una arista entre ellos.
+        addEdge(adj, 0, 1);
+        addEdge(adj, 0, 3);
+        addEdge(adj, 1, 2);
+        addEdge(adj, 3, 4);
+        addEdge(adj, 3, 7);
+        addEdge(adj, 4, 5);
+        addEdge(adj, 4, 6);
+        addEdge(adj, 4, 7);
+        addEdge(adj, 5, 6);
+        addEdge(adj, 6, 7);
+        int source = 2, dest = 5;
+        printShortestDistance(adj, source, dest, v);
+
+
+        // Número de vértices en el grafo
+        int n = 15;
+        // Vértice de origen
+        s = 0;
+        // Vértice de destino
+       int d = 14;
+
+        // Crear un grafo como se muestra en el diagrama proporcionado
+        BFSBidirectionalShortestPath gr = new BFSBidirectionalShortestPath(n);
+        gr.addEdge(0, 4);
+        gr.addEdge(1, 4);
+        gr.addEdge(2, 5);
+        gr.addEdge(3, 5);
+        gr.addEdge(4, 6);
+        gr.addEdge(5, 6);
+        gr.addEdge(6, 7);
+        gr.addEdge(7, 8);
+        gr.addEdge(8, 9);
+        gr.addEdge(8, 10);
+        gr.addEdge(9, 11);
+        gr.addEdge(9, 12);
+        gr.addEdge(10, 13);
+        gr.addEdge(10, 14);
+        if (gr.biDirSearch(s, d) == -1)
+            System.out.printf("No existe un camino entre %d y %d", s, t);
+
     }
 }
